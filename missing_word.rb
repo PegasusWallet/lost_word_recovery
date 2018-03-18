@@ -3,6 +3,7 @@ require 'money-tree'
 require 'net/http'
 require 'json'
 
+Bitcoin.network = :litecoin
 words = File.readlines("words.txt").each {|l| l.chomp!}
 words.each do |word|
     eleven_words = "mass roof drive crater umbrella sail fever answer taste then depend".split(" ")
@@ -22,7 +23,7 @@ words.each do |word|
       uri = URI(url)
       response = Net::HTTP.get(uri)
       bal = JSON.parse(response)
-      if (bal["confirmed_balance"] > 0)
+      if (bal["confirmed_balance"].to_f() > 0)
          puts "FOUND !!!!!!!!!!!!! #{key.addr} / #{key.pub} /  #{key.priv} !!!!!!!!!!"
          exit
       end
