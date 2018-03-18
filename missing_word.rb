@@ -18,11 +18,11 @@ words.each do |word|
       master = MoneyTree::Master.new(seed_hex: seed)
       node = master.node_for_path("m/0/0")
       key = Bitcoin::Key.new(node.private_key.to_hex)
-      url = URI.parse("https://blockexplorer.com/api/addr/#{key.addr}/?noTxList=1")
+      url = URI.parse("https://chain.so//api/v2/get_address_balance/LTC/#{key.addr}")
       uri = URI(url)
       response = Net::HTTP.get(uri)
       bal = JSON.parse(response)
-      if (bal["balance"] > 0)
+      if (bal["confirmed_balance"] > 0)
          puts "FOUND !!!!!!!!!!!!! #{key.addr} / #{key.pub} /  #{key.priv} !!!!!!!!!!"
          exit
       end
